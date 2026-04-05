@@ -1,0 +1,5 @@
+selector_id,persona_name,persona_pressure,n_pairs,mean_diff,paired_randomization_p,welch_t,welch_p
+free_form_random,loss_averse,0.7,3,0.0,1.0,,
+free_form_random,risk_seeking,0.7,3,0.0,1.0,,
+grounded_cap_0.8,loss_averse,0.7,3,0.0,1.0,,
+grounded_cap_0.8,risk_seeking,0.7,3,0.0,1.0,,

@@ -1,0 +1,7 @@
+selector_id,persona_name,persona_pressure,positive_gap_count,confounded_gap_count,confound_rate,invalid_rate,parse_failure_rate
+free_form_random,neutral,0.0,4,3,0.75,0.75,0.25
+free_form_random,risk_seeking,0.7,4,4,1.0,0.75,0.25
+free_form_random,loss_averse,0.7,4,4,1.0,0.75,0.25
+grounded_cap_0.8,neutral,0.0,0,0,0.0,0.0,0.0
+grounded_cap_0.8,risk_seeking,0.7,11,0,0.0,0.0,0.0
+grounded_cap_0.8,loss_averse,0.7,2,0,0.0,0.0,0.0

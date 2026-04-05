@@ -1,0 +1,4 @@
+persona_name,persona_pressure,value_col,spearman_rho,spearman_p,ols_slope,ols_p,n_capability_levels
+loss_averse,0.7,sum_rpr_true,-0.9999999999999999,,-42.01049107142857,0.0,2
+neutral,0.0,sum_rpr_true,-0.9999999999999999,,-40.16971726190476,0.0,2
+risk_seeking,0.7,sum_rpr_true,-0.9999999999999999,,-32.058482142857144,0.0,2

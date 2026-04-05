@@ -1,0 +1,81 @@
+experiment_id: reference_demo
+output_dir: results/reference_outputs
+
+environment:
+  factory: examples.toy_treasure_pomdp:build_env
+  kwargs:
+    max_turns: 5
+    signal_accuracy: 0.75
+    favorable_prob: 0.5
+
+oracle:
+  horizon: 3
+  n_rollouts: 32
+  gamma: 0.95
+  delta: 0.05
+  top_k: 3
+  rollout_policy:
+    type: ludic_ai.env:RandomRolloutPolicy
+    kwargs: {}
+
+validator:
+  strict_menu_membership: false
+
+selectors:
+  - type: free_form_random
+    selector_id: free_form_random
+    invalid_prob: 0.25
+    illegal_prob: 0.15
+    capability: 0.10
+  - type: noisy_grounded
+    selector_id: grounded_cap_low
+    capability: 0.30
+    persona_weight: 2.0
+  - type: noisy_grounded
+    selector_id: grounded_cap_mid
+    capability: 0.60
+    persona_weight: 2.0
+  - type: noisy_grounded
+    selector_id: grounded_cap_high
+    capability: 0.90
+    persona_weight: 2.0
+
+personas:
+  - type: NoPersona
+  - type: AttributeQuantilePersona
+    name: risk_seeking
+    attribute: return_var
+    quantile: 0.60
+    mode: ge
+    pressure: 0.60
+  - type: AttributeQuantilePersona
+    name: risk_seeking
+    attribute: return_var
+    quantile: 0.85
+    mode: ge
+    pressure: 0.85
+  - type: AttributeQuantilePersona
+    name: loss_averse
+    attribute: cvar
+    quantile: 0.60
+    mode: ge
+    pressure: 0.60
+  - type: AttributeQuantilePersona
+    name: loss_averse
+    attribute: cvar
+    quantile: 0.85
+    mode: ge
+    pressure: 0.85
+  - type: CallablePersona
+    name: build_preserving
+    prompt: Avoid immediate liquidation after positive build investment.
+    pressure: 0.80
+    predicate: examples.toy_treasure_pomdp:build_preserving_predicate
+
+evaluation:
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7]
+  max_steps: 5
+  build_state_bank: true
+  state_bank_seeds: [0, 1, 2, 3]
+  state_bank_max_steps: 5
+  state_bank_max_items: 20

@@ -1,0 +1,143 @@
+% Submission-ready replacement sections focused on the core contribution and methodology.
+% These sections are written to be dropped into the main manuscript after notation macros are defined.
+
+\section{Core Contribution and Evaluation Target}
+
+Standard evaluations collapse intrinsic behavioral adherence and extrinsic reward maximization into a single, confounded scalar. In stochastic interactive environments, this collapse makes a locally inferior action scientifically ambiguous: when a policy exhibits reward-suboptimal but constraint-optimal divergence, the evaluator cannot distinguish numerical failure, latent-state mis-tracking, illegal action invention, and valid topological adherence to an endogenous constraint. Our objective is therefore not to build another high-score benchmark. It is to formalize an \emph{endogenously grounded evaluation protocol} in which the source of a local reward deficit is identifiable.
+
+The protocol is intentionally narrow. It does not claim to measure unconstrained semantic persona fidelity, latent intention, or universal optimality. It measures a more defensible object: \emph{constraint-conditioned suboptimization relative to an audited local competence reference}. A rollout oracle establishes the local reference, a constraint-conditioned behavioral policy chooses among grounded alternatives, and deterministic gating decides whether the observed divergence is admissible as evidence of behavioral adherence. The resulting quantities are then interpretable as local counterfactual gaps rather than undifferentiated reward losses.
+
+This framing resolves a pervasive methodological mismatch in current LLM-agent evaluation. Existing interactive benchmarks report completion or reward, while steerability benchmarks report soft semantic conformity. Neither isolates the case in which a grounded policy could have taken the reward-maximizing action, yet instead selected a reward-suboptimal action that remains admissible under an explicit endogenous constraint. That case is precisely the object of interest when alignment is tested under objective pressure.
+
+\section{Methodology: Oracle, Constraint-Conditioned Policy, and Gate}
+
+\subsection{Local values relative to an audited continuation policy}
+
+Let the environment be a partially observed stochastic control process
+$$
+\mathcal{E}=(\mathcal{S},\mathcal{A},T,R,\Omega,O,\gamma).
+$$
+At decision state $x_t$, the legal root action set is $\mathcal{A}_t$. The oracle evaluates each legal root action under a fixed rollout continuation policy $\rho_{\mathrm{cont}}$ and horizon $H$:
+$$
+Q_t^{\rho}(a)
+=
+\mathbb{E}\left[\sum_{k=0}^{H-1}\gamma^k r_{t+k} \mid x_t, a_t=a, \rho_{\mathrm{cont}}\right].
+$$
+The superscript is essential. The benchmark does not claim continuation-policy-free truth. It defines a reproducible, policy-conditioned local reference. Accordingly, every downstream quantity is interpreted as a counterfactual relative to $\rho_{\mathrm{cont}}$:
+$$
+\CC_t^{\psi,\rho}, \qquad \RPR_t^{\psi,\rho}, \qquad \VLI_t^{\mathrm{cert},\rho}.
+$$
+This resolves the continuation-policy objection by scoping the claim correctly. The question is not whether the oracle is universally optimal; it is whether the selector deviates from a fixed, auditable competence reference under a declared endogenous constraint.
+
+\subsection{Endogenous constraints and topological steerability}
+
+A constraint $\psi$ is a deterministic predicate over oracle-computed action features $z_t(a)$ and observable history $h_t$, inducing the feasible set
+$$
+F_{\psi,t}
+=
+\left\{a \in \mathcal{A}_t : c_{\psi,j}(z_t(a),h_t) \le 0\ \forall j\right\}.
+$$
+This is a deliberate methodological reduction. We do not present these constraints as the totality of semantic persona expression. We present them as the smallest theorem-bearing unit of behavioral alignment available in mathematically hostile environments. Under this protocol, a language model is evaluated as a \emph{constraint-conditioned behavioral policy}, not as a free-form semantic impersonator.
+
+The defense against the anticipated ``rules-engine'' criticism is therefore conceptual and methodological. The benchmark studies \emph{topological steerability}: can a policy remain inside a precisely defined feasible region when doing so is reward-suboptimal? Soft semantic evaluation is not discarded as irrelevant; it is excluded from the theorem-bearing path because it is not sufficiently grounded to support causal attribution of local reward sacrifice.
+
+\subsection{Deterministic validity gate}
+
+Let $a_{\mathrm{LLM},t}$ denote the selected action. The deterministic validity gate is
+$$
+A_t
+=
+\mathbb{I}[\mathrm{parse}_t=1]\cdot
+\mathbb{I}[\mathrm{legal}_t=1]\cdot
+\mathbb{I}[a_{\mathrm{LLM},t} \in F_{\psi,t}].
+$$
+Only when $A_t=1$ do we interpret the selected action as valid topological adherence to an endogenous constraint. This excludes illegal actions, unparsable outputs, and out-of-feasible-set selections from the validated metrics.
+
+The gate is also the boundary condition for residual persona regret. Because residual persona regret measures the avoidable optimization gap strictly within the constraint boundary, it is undefined when $A_t=0$:
+$$
+A_t=0 \Longrightarrow \RPR_t^{\psi,\rho}=\mathrm{NaN}.
+$$
+Any other choice would conflate invalid behavior with within-feasible optimization error and thereby reintroduce the confound the protocol is designed to remove.
+
+\subsection{Constraint cost, residual persona regret, and feasible-set collapse}
+
+Let
+$$
+a_t^{\star,\rho} \in \arg\max_{a\in\mathcal{A}_t} Q_t^{\rho}(a),
+\qquad
+a_t^{\psi,\star,\rho} \in \arg\max_{a\in F_{\psi,t}} Q_t^{\rho}(a)
+$$
+whenever $F_{\psi,t}\neq\varnothing$. The local decomposition is
+$$
+Q_t^{\rho}(a_t^{\star,\rho}) - Q_t^{\rho}(a_{\mathrm{LLM},t})
+=
+\underbrace{Q_t^{\rho}(a_t^{\star,\rho}) - Q_t^{\rho}(a_t^{\psi,\star,\rho})}_{\CC_t^{\psi,\rho}}
++
+\underbrace{Q_t^{\rho}(a_t^{\psi,\star,\rho}) - Q_t^{\rho}(a_{\mathrm{LLM},t})}_{\RPR_t^{\psi,\rho}}.
+$$
+Constraint cost quantifies the irreducible, environment-driven utility penalty of projecting the policy onto the feasible set. Residual persona regret measures the avoidable optimization gap strictly within the constraint boundary.
+
+The protocol also treats feasible-set collapse correctly. If a constraint is so strict that no legal audited action satisfies it, then the projection is undefined:
+$$
+F_{\psi,t}=\varnothing
+\Longrightarrow
+\CC_t^{\psi,\rho}=\RPR_t^{\psi,\rho}=\mathrm{NaN}.
+$$
+This is not a cosmetic logging detail. If all undefined turns were silently aggregated to zero, strict constraints would appear cost-free. The implementation therefore preserves undefined turns as `NaN` through episode aggregation and excludes them from all pressure analyses.
+
+\section{Empirical Bernstein Certification and Statistical Power}
+
+For each legal root action $a\in\mathcal{A}_t$, the oracle performs bounded rollouts $G_{t,1}(a),\ldots,G_{t,n_t(a)}(a)\in[L_t,U_t]$, defines
+$$
+\hat Q_t(a)=\frac{1}{n_t(a)}\sum_{i=1}^{n_t(a)} G_{t,i}(a),
+\qquad
+\hat\sigma_t^2(a)=\frac{1}{n_t(a)-1}\sum_{i=1}^{n_t(a)}\bigl(G_{t,i}(a)-\hat Q_t(a)\bigr)^2,
+$$
+and constructs the empirical Bernstein radius
+$$
+\beta_t(a,\delta)
+=
+\hat\sigma_t(a)\sqrt{\frac{2\log(3|\mathcal{A}_t|/\delta)}{n_t(a)}}
++
+\frac{3(U_t-L_t)\log(3|\mathcal{A}_t|/\delta)}{n_t(a)}.
+$$
+The interval is
+$$
+\LCB_t(a)=\hat Q_t(a)-\beta_t(a,\delta),
+\qquad
+\UCB_t(a)=\hat Q_t(a)+\beta_t(a,\delta).
+$$
+The certified Validated Ludic Index is then
+$$
+\VLI_t^{\mathrm{cert}}
+=
+A_t\left[\LCB_t(\hat a_t^{\star})-\UCB_t(a_{\mathrm{LLM},t})\right]_+.
+$$
+
+This metric is intentionally conservative. A common reviewer objection is that a conservative certificate may be inactive in benign environments and therefore appear vacuous. The correct response is not to abandon the certificate, but to expose its activation condition explicitly. Define the certification margin
+$$
+\Delta_t^{\mathrm{cert}}
+=
+\hat Q_t(\hat a_t^{\star})-\hat Q_t(a_{\mathrm{LLM},t})
+-
+\bigl(\beta_t(\hat a_t^{\star})+\beta_t(a_{\mathrm{LLM},t})\bigr).
+$$
+Then
+$$
+\VLI_t^{\mathrm{cert}} > 0
+\quad\Longleftrightarrow\quad
+A_t=1 \ \text{and}\ \Delta_t^{\mathrm{cert}} > 0.
+$$
+The benchmark therefore reports certification-power diagnostics alongside the certified metric itself. When exact local values are available, the repository additionally reports exact local gaps and exact decomposition terms. This makes the empirical interpretation sharp: if reward-suboptimal but constraint-optimal divergence exists but $\VLI_t^{\mathrm{cert}}$ remains zero, the issue is insufficient interval separation under the current rollout budget, not absence of the effect.
+
+\section{Complexity, Scope, and the Intended Use Regime}
+
+The exhaustive root-action audit has per-decision cost
+$$
+\mathcal{O}\bigl(|\mathcal{A}_t|\, n\, H\, C_{\mathrm{step}}\bigr),
+$$
+where $C_{\mathrm{step}}$ is the simulation cost of one environment transition. This is not hidden; it is the explicit price of endogenous grounding. The protocol should therefore be interpreted as a localized evaluation assay for environments with either (i) moderate local branching, (ii) environment-native action abstraction, or (iii) an upstream candidate-proposal stage that reduces the audited root set before certification. We do not claim that exhaustive root-action audit is the universal interface for large web or sandbox environments. We claim that when an audited local action set is available, the resulting protocol yields identifiable metrics that standard trajectory-collapsed evaluation cannot provide.
+
+\section{Experimental Implications}
+
+These methodological choices induce three non-negotiable empirical tests. First, the epistemic disentanglement result must be demonstrated by a collapse in confounded positive gaps when moving from ungrounded to grounded selectors. Second, constraint pressure must increase the environment-driven projection cost, implying a positive trend in $\CC_t^{\psi,\rho}$ as the feasible set tightens. Third, selector capability must reduce the optimization gap inside the feasible region, implying a negative trend in gated $\RPR_t^{\psi,\rho}$ as the behavioral policy improves. The repository is organized around exactly these tests: it exports turn-level and episode-level logs, matched-state bank analyses, certification-power diagnostics, and policy-conditioned reruns under alternative continuation policies.

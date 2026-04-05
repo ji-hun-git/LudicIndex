@@ -1,0 +1,9 @@
+selector_id,persona_name,value_col,spearman_rho,spearman_p,ols_slope,ols_p,n_pressure_levels
+free_form_random,loss_averse,sum_cc_true,,,0.0,1.0,2
+free_form_random,risk_seeking,sum_cc_true,0.9999999999999999,,15.372656249999999,0.0,2
+grounded_cap_high,loss_averse,sum_cc_true,0.9999999999999999,,1.4832031249999993,0.0,2
+grounded_cap_high,risk_seeking,sum_cc_true,0.9999999999999999,,49.497656250000006,0.0,2
+grounded_cap_low,loss_averse,sum_cc_true,0.9999999999999999,,1.4832031249999993,0.0,2
+grounded_cap_low,risk_seeking,sum_cc_true,0.9999999999999999,,39.108203125,0.0,2
+grounded_cap_mid,loss_averse,sum_cc_true,0.9999999999999999,,1.4832031249999993,0.0,2
+grounded_cap_mid,risk_seeking,sum_cc_true,0.9999999999999999,,49.497656250000006,0.0,2

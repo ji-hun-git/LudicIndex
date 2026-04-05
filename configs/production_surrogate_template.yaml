@@ -1,0 +1,63 @@
+experiment_id: production_surrogate_run
+output_dir: results/production_surrogate_run
+
+environment:
+  # Replace this with your audited surrogate factory.
+  # The callable must return an object implementing ludic_ai.env.POMDPEnv.
+  factory: surrogates.your_production_env:build_env
+  kwargs:
+    # Fill in surrogate-specific parameters here.
+    max_turns: 12
+
+oracle:
+  horizon: 4
+  n_rollouts: 128
+  gamma: 0.99
+  delta: 0.05
+  top_k: 8
+  rollout_policy:
+    # Swap this dotted path to compare continuation policies rho_cont.
+    type: ludic_ai.env:RandomRolloutPolicy
+    kwargs: {}
+
+validator:
+  strict_menu_membership: true
+
+selectors:
+  - type: noisy_grounded
+    selector_id: grounded_cap_low
+    capability: 0.30
+    persona_weight: 2.0
+  - type: noisy_grounded
+    selector_id: grounded_cap_mid
+    capability: 0.60
+    persona_weight: 2.0
+  - type: noisy_grounded
+    selector_id: grounded_cap_high
+    capability: 0.90
+    persona_weight: 2.0
+  # Replace or augment the entries above with your concrete LLM selector subclass
+  # via a dotted path, e.g. your_package.selectors:OpenAIJSONSelector.
+
+personas:
+  - type: NoPersona
+  - type: AttributeQuantilePersona
+    name: risk_seeking
+    attribute: return_var
+    quantile: 0.80
+    mode: ge
+    pressure: 0.80
+  - type: AttributeQuantilePersona
+    name: downside_protective
+    attribute: cvar
+    quantile: 0.80
+    mode: ge
+    pressure: 0.80
+
+evaluation:
+  seeds: [0, 1, 2, 3, 4]
+  max_steps: 20
+  build_state_bank: true
+  state_bank_seeds: [0, 1, 2]
+  state_bank_max_steps: 20
+  state_bank_max_items: 200

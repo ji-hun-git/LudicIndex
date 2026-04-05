@@ -1,0 +1,69 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{liu2023agentbench,zhou2023webarena,hafner2021benchmarking,kuttler2020nethack}
+\citation{gu2024llmjudge}
+\citation{ouyang2022instructgpt,malik2025rewardbench2}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{liu2023agentbench,zhou2023webarena,hafner2021benchmarking,kuttler2020nethack}
+\citation{ichter2023saycan}
+\citation{yao2023react}
+\citation{ouyang2022instructgpt}
+\citation{gu2024llmjudge}
+\citation{malik2025rewardbench2}
+\citation{samuel2024personagym}
+\citation{sorensen2024pluralistic}
+\citation{altman1999cmdp}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Interactive agent benchmarks.}{2}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Grounded neuro-symbolic systems.}{2}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reasoning-and-acting baselines.}{2}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Alignment, evaluation, and constraints.}{2}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Formulation}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Methodology and System Design}{3}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Rollout oracle}{3}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Persona-conditioned selector}{3}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Deterministic validity gate}{4}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}RNG separation}{4}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Metrics and Theorems}{4}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Exact and estimated local gaps}{4}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Constraint cost and residual persona regret}{4}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Empirical Bernstein confidence intervals}{5}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Certified validated sacrifice}{5}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Experimental Setup}{6}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Codebase and execution modes}{6}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Reference environment}{6}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Selectors, personas, and hypotheses}{6}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Results}{6}{section.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Epistemic disentanglement on the reference environment. Ungrounded play produces large positive raw gaps that are frequently invalid; grounded selectors collapse the confound rate to zero.}}{7}{figure.1}\protected@file@percent }
+\newlabel{fig:confound}{{1}{7}{Epistemic disentanglement on the reference environment. Ungrounded play produces large positive raw gaps that are frequently invalid; grounded selectors collapse the confound rate to zero}{figure.1}{}}
+\newlabel{fig:confound@cref}{{[figure][1][]1}{[1][7][]7}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Grounding removes confounded positive gaps}{7}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Constraint cost rises with persona pressure}{7}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Gated residual persona regret falls with capability}{7}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Certification remains conservative in the reference setting}{7}{subsection.7.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Constraint cost versus persona pressure on the matched-state bank. Pressure increases the cost of behaving according to the declared persona.}}{8}{figure.2}\protected@file@percent }
+\newlabel{fig:ccpressure}{{2}{8}{Constraint cost versus persona pressure on the matched-state bank. Pressure increases the cost of behaving according to the declared persona}{figure.2}{}}
+\newlabel{fig:ccpressure@cref}{{[figure][2][]2}{[1][7][]8}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Reference implementation summary from the patched CSV exports. These numbers validate the benchmark mechanics and expose the current certification conservatism in the toy environment.}}{8}{table.1}\protected@file@percent }
+\newlabel{tab:summary}{{1}{8}{Reference implementation summary from the patched CSV exports. These numbers validate the benchmark mechanics and expose the current certification conservatism in the toy environment}{table.1}{}}
+\newlabel{tab:summary@cref}{{[table][1][]1}{[1][7][]8}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{8}{section.8}\protected@file@percent }
+\bibcite{altman1999cmdp}{{1}{1999}{{Altman}}{{}}}
+\bibcite{liu2023agentbench}{{2}{2023}{{Liu et~al.}}{{Liu, Yu, Zhang, Xu, Lei, Lai, Gu, Ding, Men, Yang, et~al.}}}
+\bibcite{zhou2023webarena}{{3}{2023}{{Zhou et~al.}}{{Zhou, Xu, Zhu, Zhou, Lo, Sridhar, Cheng, Ou, Bisk, Fried, et~al.}}}
+\bibcite{hafner2021benchmarking}{{4}{2021}{{Hafner}}{{}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Residual persona regret versus selector capability on the matched-state bank. Higher capability improves action quality within the feasible constrained set.}}{9}{figure.3}\protected@file@percent }
+\newlabel{fig:rprcap}{{3}{9}{Residual persona regret versus selector capability on the matched-state bank. Higher capability improves action quality within the feasible constrained set}{figure.3}{}}
+\newlabel{fig:rprcap@cref}{{[figure][3][]3}{[1][7][]9}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{9}{section.9}\protected@file@percent }
+\bibcite{kuttler2020nethack}{{5}{2020}{{K{"u}ttler et~al.}}{{K{"u}ttler, Nardelli, Miller, Raileanu, McGovern, Tassa, and Grefenstette}}}
+\bibcite{ichter2023saycan}{{6}{2023}{{Ichter et~al.}}{{Ichter, Brohan, Chebotar, Finn, Hausman, Herzog, Ho, Ibarz, Irpan, Jang, et~al.}}}
+\bibcite{yao2023react}{{7}{2023}{{Yao et~al.}}{{Yao, Zhao, Yu, Du, Shafran, Narasimhan, and Cao}}}
+\bibcite{ouyang2022instructgpt}{{8}{2022}{{Ouyang et~al.}}{{Ouyang, Wu, Jiang, Almeida, Wainwright, Mishkin, Zhang, Agarwal, Slama, Ray, et~al.}}}
+\bibcite{gu2024llmjudge}{{9}{2024}{{Gu et~al.}}{{Gu, Jiang, Shi, Tan, Zhai, Xu, Li, Shen, Ma, Liu, et~al.}}}
+\bibcite{malik2025rewardbench2}{{10}{2025}{{Malik et~al.}}{{Malik, Pyatkin, Land, Morrison, Smith, Hajishirzi, and Lambert}}}
+\bibcite{samuel2024personagym}{{11}{2024}{{Samuel et~al.}}{{Samuel, Zou, Zhou, Chaudhari, Kalyan, Rajpurohit, Deshpande, Narasimhan, and Murahari}}}
+\bibcite{sorensen2024pluralistic}{{12}{2024}{{Sorensen et~al.}}{{Sorensen, Moore, Fisher, Gordon, Mireshghallah, Rytting, Ye, Jiang, Lu, Dziri, et~al.}}}
+\gdef \@abspage@last{10}

@@ -1,0 +1,14 @@
+name: ludic-ai
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.10
+  - numpy>=1.24
+  - pandas>=2.0
+  - scipy>=1.10
+  - statsmodels>=0.14
+  - matplotlib>=3.8
+  - pyyaml>=6.0
+  - pip
+  - pip:
+      - -e .
