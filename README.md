@@ -1,4 +1,4 @@
-# Ludic AI
+# Ludic Index
 
 **An endogenously grounded evaluation protocol for identifiable constraint-conditioned suboptimization in stochastic environments.**
 
